@@ -13,24 +13,24 @@ body{margin:0;background:#111;color:white;font-family:sans-serif;overflow-x:hidd
 .caption{margin-top:10px;font-size:20px;text-align:center;}
 #welcome{position:fixed;inset:0;background:#111;color:white;display:flex;align-items:center;justify-content:center;flex-direction:column;z-index:2000;}
 #welcome button{padding:12px 25px;font-size:20px;border-radius:12px;border:none;background:#ff0066;color:white;cursor:pointer;}
-audio{display:none;}
 .floating-heart{position:fixed;color:#ff4d8f;animation:floatUp 4s linear forwards;}
 @keyframes floatUp{from{transform:translateY(0);opacity:1}to{transform:translateY(-120px);opacity:0}}
 .rose{position:fixed;top:-30px;animation:drop 6s linear forwards;}
 @keyframes drop{from{transform:translateY(0)}to{transform:translateY(110vh)}}
+iframe{margin-top:10px;border-radius:12px;}
 </style>
 </head>
 <body>
 
 <div id="welcome">
   <h1>أهلاً حبيبتي 💖</h1>
-  <p>ادخلي وشوفي الصور الجميلة 😘</p>
+  <p>ادخلي شوفي ❤️</p>
   <button id="enterBtn">ادخلي</button>
 </div>
 
-<audio id="bgMusic" loop>
-  <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
-</audio>
+<!-- مشغل SoundCloud -->
+<iframe id="bgMusic" width="100%" height="166" scrolling="no" frameborder="no" allow="autoplay"
+src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/soundcloud%253Atracks%253A1447114696&color=%23ff5500&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true&visual=true"></iframe>
 
 <div class="container">
   <div class="card right">
@@ -62,11 +62,13 @@ audio{display:none;}
 <script>
 const welcome = document.getElementById('welcome');
 const enterBtn = document.getElementById('enterBtn');
-const music = document.getElementById('bgMusic');
+const musicIframe = document.getElementById('bgMusic');
 
 enterBtn.addEventListener('click', ()=>{
   welcome.style.display='none';
-  music.play();
+  // لتشغيل الصوت في iframe بعد الضغط
+  const iframeWindow = musicIframe.contentWindow;
+  iframeWindow.postMessage({ method: 'play' }, '*');
 });
 
 function spawnHeart(){
